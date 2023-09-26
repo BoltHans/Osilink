@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "147088843600",
+    "firebase_url": "https://osilink-7b7b4-default-rtdb.firebaseio.com",
+    "project_id": "osilink-7b7b4",
+    "storage_bucket": "osilink-7b7b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:147088843600:android:91b66da1b96560f6bcc255",
+        "android_client_info": {
+          "package_name": "com.example.osilink"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBg6YkaA1CFleqQCzg1MyTHSmWJvKf6X34"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

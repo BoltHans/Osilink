@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="ic_home_selected" />
+    <drawable name="ic_buy_selected" />
+    <drawable name="ic_home" />
+    <drawable name="ic_buy" />
+    <drawable name="ic_rent" />
+    <drawable name="ic_rent_selected" />
+    <drawable name="ic_sell" />
+    <drawable name="ic_sell_selected" />
+    <drawable name="ic_my_home" />
+    <drawable name="ic_my_home_selected" />
+    <drawable name="ic_projects" />
+    <drawable name="ic_projects_selected" />
+</resources>
