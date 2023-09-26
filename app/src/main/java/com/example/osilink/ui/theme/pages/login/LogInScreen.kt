@@ -106,7 +106,6 @@ fun LogInScreen(navController: NavHostController) {
                 //--------------LOGIN LOGIC----------------//
                 var authRepository = AuthRepository(navController,context)
                 authRepository.login(email.text.trim(), password.text.trim())
-                navController.navigate(ROUTE_HOME)
             },
             colors = ButtonDefaults.buttonColors(Color.White),
             modifier = Modifier

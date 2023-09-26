@@ -1,5 +1,10 @@
 package com.example.osilink.ui.theme.pages.carpenter
 
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -27,10 +32,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import com.example.osilink.R
 import com.example.osilink.data.CarpenterRepository
 import com.example.osilink.models.Carpenter
+
 
 
 @Composable
@@ -103,14 +111,18 @@ fun CarpenterScreen(navController:NavHostController) {
 
 @Composable
 fun CarpenterItem(name: String, email: String, phoneNumber: String, userid: String, navController:NavHostController, carpenterRepository: CarpenterRepository) {
-
+    var context = LocalContext.current
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(text = name)
         Text(text = email)
         Text(text = phoneNumber)
         Button(onClick = {
-            //CALL INTENT
-        },
+            val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:"+phoneNumber))
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(context as Activity,arrayOf<String>(Manifest.permission.CALL_PHONE),1                    )
+            } else {
+                context.startActivity(intent)
+            } },
             colors = ButtonDefaults.buttonColors(Color.White)
         ) {
             Text(text = "Call Plumber",

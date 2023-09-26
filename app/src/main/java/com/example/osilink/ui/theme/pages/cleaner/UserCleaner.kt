@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.osilink.R
 import com.example.osilink.navigation.ROUTE_ELECTRICAL
@@ -28,7 +29,7 @@ import com.example.osilink.ui.theme.OsilinkTheme
 
 @SuppressLint("MutableCollectionMutableState")
 @Composable
-fun UserCleanerScreen(navController: NavController) {
+fun UserCleanerScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()

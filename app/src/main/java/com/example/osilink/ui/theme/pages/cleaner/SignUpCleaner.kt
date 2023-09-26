@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.osilink.R
 import com.example.osilink.data.CleanerRepository
@@ -24,7 +25,7 @@ import com.example.osilink.ui.theme.OsilinkTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignUpCleanersScreen(navController: NavController) {
+fun SignUpCleanersScreen(navController: NavHostController) {
 
 
     val context = LocalContext.current

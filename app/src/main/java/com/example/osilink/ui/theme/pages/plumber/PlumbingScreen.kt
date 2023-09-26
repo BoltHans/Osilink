@@ -1,5 +1,10 @@
 package com.example.osilink.ui.theme.pages.plumber
 
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import com.example.osilink.data.PlumberRepository
 import com.example.osilink.models.Plumber
 import androidx.compose.foundation.Image
@@ -19,6 +24,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import com.example.osilink.R
 
@@ -95,16 +102,21 @@ fun PlumbingScreen(navController:NavHostController) {
 
 @Composable
 fun PlumberItem(name: String, email: String, phoneNumber: String, userid: String, navController:NavHostController, plumberRepository: PlumberRepository) {
-
+    var context = LocalContext.current
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(text = name)
         Text(text = email)
         Text(text = phoneNumber)
         Button(onClick = {
-            //CALL INTENT
-        },
-            colors = ButtonDefaults.buttonColors(Color.White)
-        ) {
+                val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:"+phoneNumber))
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(context as Activity,arrayOf<String>(Manifest.permission.CALL_PHONE),1                    )
+                } else {
+                    context.startActivity(intent)
+                } },
+                colors = ButtonDefaults.buttonColors(Color.White)
+            )
+        {
             Text(text = "Call Plumber",
                 color = Color.Black)
         }

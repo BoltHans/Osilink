@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.osilink.R
 import com.example.osilink.data.BookingRepository
@@ -29,7 +30,7 @@ import com.example.osilink.ui.theme.OsilinkTheme
 @SuppressLint("MutableCollectionMutableState")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BookingScreen(navController: NavController) {
+fun BookingScreen(navController: NavHostController) {
 
 
     val context = LocalContext.current

@@ -2,6 +2,7 @@ package com.example.osilink.ui.theme.pages.signup
 
 import AuthRepository
 import android.content.res.Configuration
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -111,9 +112,13 @@ fun SignUpScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.height(20.dp))
         Button(onClick = {
             //--------------SIGNUP LOGIC----------------//
-            var mysignup = AuthRepository(navController,context)
-            mysignup.signup(name.text.trim(), email.text.trim(), password.text.trim())
-            navController.navigate(ROUTE_LOGIN)
+            if (name.text.isEmpty() || email.text.isEmpty() || password.text.isEmpty()){
+                Toast.makeText(context, "Please fill all inputs", Toast.LENGTH_SHORT).show()
+
+            }else{
+                var mysignup = AuthRepository(navController,context)
+                mysignup.signup(name.text.trim(), email.text.trim(), password.text.trim())
+            }
         },
             colors = ButtonDefaults.buttonColors(Color.White),
             modifier = Modifier

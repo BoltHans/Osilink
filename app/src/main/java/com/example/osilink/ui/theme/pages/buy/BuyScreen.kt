@@ -1,5 +1,10 @@
 package com.example.osilink.ui.theme.pages.buy
 
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -28,6 +33,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.osilink.R
@@ -111,7 +118,7 @@ fun BuyScreen(navController:NavHostController) {
 @Composable
 fun HouseItem(name: String, email: String, phoneNumber: String, imageUrl: String,valuation: String,id: String,
               navController:NavHostController, houseRepository: HouseRepository) {
-
+    var context = LocalContext.current
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(text = name)
         Text(text = email)
@@ -123,8 +130,12 @@ fun HouseItem(name: String, email: String, phoneNumber: String, imageUrl: String
         )
         Text(text = valuation)
         Button(onClick = {
-                    //CALL INTENT
-        },
+                val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+25402336371"))
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(context as Activity,arrayOf<String>(Manifest.permission.CALL_PHONE),1                    )
+                } else {
+                    context.startActivity(intent)
+                }},
             colors = ButtonDefaults.buttonColors(Color.White)
         ) {
             Text(text = "Call Agent",

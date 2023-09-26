@@ -36,82 +36,71 @@ fun AppNavHost(modifier: Modifier = Modifier,
                startDestination:String = ROUTE_HOME) {
     NavHost(
         navController = navController,
-        startDestination = BottomBarScreen.Home.route
+        startDestination = startDestination
     ) {
-        composable(route = BottomBarScreen.Home.route) {
-            HomeScreen(rememberNavController())
-        }
-        composable(route = BottomBarScreen.Buy.route) {
-            BuyScreen(rememberNavController())
-        }
-        composable(route = BottomBarScreen.Rent.route) {
-            RentScreen(rememberNavController())
-        }
-        composable(route = BottomBarScreen.SignUp.route) {
-            SignUpScreen(rememberNavController())
-        }
-        composable(route = BottomBarScreen.MyHome.route) {
-            MyHomeScreen(rememberNavController())
+
+        composable(ROUTE_BUY) {
+            BuyScreen(navController)
         }
         composable(ROUTE_HOME) {
-            HomeScreen(rememberNavController())
+            HomeScreen(navController)
         }
         composable(ROUTE_RENT) {
-            RentScreen(rememberNavController())
+            RentScreen(navController)
         }
         composable(ROUTE_SELL) {
-            SellScreen(rememberNavController())
+            SellScreen(navController)
         }
         composable(ROUTE_MYHOME) {
-            MyHomeScreen(rememberNavController())
+            MyHomeScreen(navController)
         }
         composable(ROUTE_BOOKING) {
-            BookingScreen(rememberNavController())
+            BookingScreen(navController)
         }
         composable(ROUTE_LOGIN){
-            LogInScreen(rememberNavController())
+            LogInScreen(navController)
         }
         composable(ROUTE_SIGNUP){
-            SignUpScreen(rememberNavController())
+            SignUpScreen(navController)
         }
         composable(ROUTE_CARPENTRY) {
-            CarpenterScreen(rememberNavController())
+            CarpenterScreen(navController)
         }
         composable(ROUTE_CLEANING) {
-            CleanerServicesScreen(rememberNavController())
+            CleanerServicesScreen(navController)
         }
         composable(ROUTE_ELECTRICAL) {
-            ElectricalScreen(rememberNavController())
+            ElectricalScreen(navController)
         }
         composable(ROUTE_PLUMBING) {
-            PlumbingScreen(rememberNavController())
+            PlumbingScreen(navController)
         }
         composable(ROUTE_SIGNUP_ELECTRICIAN) {
-            SignUpElectriciansScreen(rememberNavController())
+            SignUpElectriciansScreen(navController)
         }
         composable(ROUTE_SIGNUP_CLEANER) {
-            SignUpCleanersScreen(rememberNavController())
+            SignUpCleanersScreen(navController)
         }
         composable(ROUTE_SIGNUP_CARPENTER) {
-            SignUpCarpentersScreen(rememberNavController())
+            SignUpCarpentersScreen(navController)
         }
         composable(ROUTE_SIGNUP_PLUMBER) {
-            SignUpPlumbersScreen(rememberNavController())
+            SignUpPlumbersScreen(navController)
         }
         composable(ROUTE_USER_ELECTRICIAN) {
-            UserElectricianScreen(rememberNavController())
+            UserElectricianScreen(navController)
         }
         composable(ROUTE_USER_PLUMBER) {
-            UserPlumberScreen(rememberNavController())
+            UserPlumberScreen(navController)
         }
         composable(ROUTE_USER_CLEANER) {
-            UserCleanerScreen(rememberNavController())
+            UserCleanerScreen(navController)
         }
         composable(ROUTE_USER_CARPENTER) {
-            UserCarpenterScreen(rememberNavController())
+            UserCarpenterScreen(navController)
         }
         composable(ROUTE_THANK_YOU) {
-            ThankNoteScreen(rememberNavController())
+            ThankNoteScreen(navController)
         }
     }
 }

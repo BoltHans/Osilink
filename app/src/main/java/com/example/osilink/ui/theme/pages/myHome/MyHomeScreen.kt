@@ -27,17 +27,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.osilink.R
 import com.example.osilink.navigation.ROUTE_CARPENTRY
 import com.example.osilink.navigation.ROUTE_CLEANING
 import com.example.osilink.navigation.ROUTE_ELECTRICAL
 import com.example.osilink.navigation.ROUTE_PLUMBING
+import com.example.osilink.navigation.ROUTE_USER_CLEANER
+import com.example.osilink.navigation.ROUTE_USER_ELECTRICIAN
+import com.example.osilink.navigation.ROUTE_USER_PLUMBER
 import com.example.osilink.ui.theme.OsilinkTheme
 
 
 @Composable
-fun MyHomeScreen(navController: NavController) {
+fun MyHomeScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -60,7 +64,8 @@ fun MyHomeScreen(navController: NavController) {
         ) {
             Text(
                 text = "Welcome to Osilink Real Estate. " +
-                        "Would you like to rent our homes?",
+                        "We offer services to style up your home , how can we help you today?"+
+                        "If your looking for a job also you can also click the 'show more' button for the service you offer.",
                 fontSize = 13.sp,
                 color = Color.White,
                 style = TextStyle(
@@ -98,7 +103,7 @@ fun MyHomeScreen(navController: NavController) {
                     fontWeight = FontWeight.SemiBold,
                     color = Color.White
                 )
-                Button(onClick = {navController.navigate(ROUTE_CLEANING)},
+                Button(onClick = {navController.navigate(ROUTE_USER_CLEANER)},
                     colors = ButtonDefaults.buttonColors(Color.White)) {
                     Text(
                         text = "Show More",
@@ -133,7 +138,7 @@ fun MyHomeScreen(navController: NavController) {
                     fontWeight = FontWeight.SemiBold,
                     color = Color.White
                 )
-                Button(onClick = {navController.navigate(ROUTE_PLUMBING)},
+                Button(onClick = {navController.navigate(ROUTE_USER_PLUMBER)},
                     colors = ButtonDefaults.buttonColors(Color.White)) {
                     Text(
                         text = "Show More",
@@ -168,7 +173,7 @@ fun MyHomeScreen(navController: NavController) {
                     fontWeight = FontWeight.SemiBold,
                     color = Color.White
                 )
-                Button(onClick = {navController.navigate(ROUTE_ELECTRICAL)},
+                Button(onClick = {navController.navigate(ROUTE_USER_ELECTRICIAN)},
                     colors = ButtonDefaults.buttonColors(Color.White)
                 ) {
                     Text(
