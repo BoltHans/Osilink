@@ -8,7 +8,10 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.navigation.NavController
 import com.example.osilink.models.Booking
+import com.example.osilink.navigation.ROUTE_BOOKED_LIST
 import com.example.osilink.navigation.ROUTE_LOGIN
+import com.example.osilink.navigation.ROUTE_SELL
+import com.example.osilink.navigation.ROUTE_USER_CLEANER
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -40,6 +43,7 @@ class BookingRepository(var navController: NavController, var context: Context) 
             progress.dismiss()
             if (it.isSuccessful) {
                 Toast.makeText(context, "Saving successful", Toast.LENGTH_SHORT).show()
+                navController.navigate(ROUTE_SELL)
             } else {
                 Toast.makeText(context, "ERROR: ${it.exception!!.message}", Toast.LENGTH_SHORT).show()
             }

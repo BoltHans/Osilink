@@ -87,7 +87,7 @@ fun UserCarpenterScreen(navController: NavHostController) {
                 .fillMaxWidth()
                 .padding(top = 16.dp)
         ) {
-            Text(text = "Electrician", color = Color.Black)
+            Text(text = "Carpenter", color = Color.Black)
         }
     }
 }

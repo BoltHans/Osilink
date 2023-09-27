@@ -6,9 +6,9 @@ class Booking{
     var time: String = ""
     var id: String = ""
 
-    constructor(houseName: String, date: String, time:String, id: String) {
+    constructor(houseName: String, selectedDate: String, time:String, id: String) {
         this.houseName = houseName
-        this.date = date
+        this.date = selectedDate
         this.time = time
         this.id = id
 

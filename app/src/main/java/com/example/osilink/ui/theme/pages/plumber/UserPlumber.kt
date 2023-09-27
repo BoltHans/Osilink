@@ -87,7 +87,7 @@ fun UserPlumberScreen(navController: NavHostController) {
                 .fillMaxWidth()
                 .padding(top = 16.dp)
         ) {
-            Text(text = "Electrician", color = Color.Black)
+            Text(text = "Plumber", color = Color.Black)
         }
     }
 }

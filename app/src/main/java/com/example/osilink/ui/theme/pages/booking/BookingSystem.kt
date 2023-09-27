@@ -17,14 +17,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.osilink.R
 import com.example.osilink.data.BookingRepository
-import com.example.osilink.navigation.ROUTE_RENT
+import com.example.osilink.navigation.ROUTE_BOOKED_LIST
+import com.example.osilink.navigation.ROUTE_SELL
 import com.example.osilink.ui.theme.OsilinkTheme
-
+import java.util.*
 
 
 @SuppressLint("MutableCollectionMutableState")
@@ -49,35 +49,35 @@ fun BookingScreen(navController: NavHostController) {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-               Image(
-                painter = painterResource(id = R.drawable.logo),
-                contentDescription = "Osilink",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp),
-                alignment = Alignment.Center
-            )
+        Image(
+            painter = painterResource(id = R.drawable.logo),
+            contentDescription = "Osilink",
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp),
+            alignment = Alignment.Center
+        )
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "Welcome to Osilink Real Estate. " +
-                            "Would you like to book and appointment?",
-                    fontSize = 13.sp,
-                    color = Color.White,
-                    style = TextStyle(
-                        shadow = Shadow(
-                            color = Color.Gray,
-                            offset = Offset(10f, 10f),
-                            blurRadius = 10f
-                        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "Welcome to Osilink Real Estate. " +
+                        "Would you like to book and appointment?",
+                fontSize = 13.sp,
+                color = Color.White,
+                style = TextStyle(
+                    shadow = Shadow(
+                        color = Color.Gray,
+                        offset = Offset(10f, 10f),
+                        blurRadius = 10f
                     )
                 )
-            }
+            )
+        }
         OutlinedTextField(
             value = houseName,
             onValueChange = { houseName = it },

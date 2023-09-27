@@ -3,6 +3,7 @@ import android.content.Context
 import android.widget.Toast
 import androidx.navigation.NavController
 import com.example.osilink.models.User
+import com.example.osilink.navigation.ROUTE_BOOKING
 import com.example.osilink.navigation.ROUTE_HOME
 import com.example.osilink.navigation.ROUTE_LOGIN
 import com.example.osilink.navigation.ROUTE_SIGNUP
@@ -33,7 +34,7 @@ class AuthRepository(var navController: NavController, var context:Context) {
                         navController.navigate(ROUTE_HOME)
                     }else{
                         Toast.makeText(context, "ERROR: ${it.exception!!.message}", Toast.LENGTH_SHORT).show()
-                        navController.navigate(ROUTE_LOGIN)
+                        navController.navigate(ROUTE_BOOKING)
                     }
                 }
             }else{
@@ -47,7 +48,7 @@ class AuthRepository(var navController: NavController, var context:Context) {
             progress.dismiss()
             if (it.isSuccessful){
                 Toast.makeText(context, "Login successful", Toast.LENGTH_SHORT).show()
-                navController.navigate(ROUTE_HOME)
+                navController.navigate(ROUTE_BOOKING)
             }else{
                 Toast.makeText(context, "ERROR: ${it.exception!!.message}", Toast.LENGTH_SHORT).show()
                 navController.navigate(ROUTE_LOGIN)

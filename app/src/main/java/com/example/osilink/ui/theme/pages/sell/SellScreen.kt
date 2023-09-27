@@ -7,6 +7,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddAPhoto
 import androidx.compose.material3.Button
@@ -62,6 +64,7 @@ fun SellScreen(navController: NavHostController) {
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.Black)
+            .verticalScroll(enabled = true, state = rememberScrollState())
             .padding(16.dp)
     ) {
         Image(
@@ -138,28 +141,6 @@ fun SellScreen(navController: NavHostController) {
         Button(
             onClick = {
                 var houseRepository = HouseRepository(navController, context)
-                houseRepository.saveHouseSellWithImage(
-                    name.trim(),
-                    email.trim(),
-                    phoneNumber.trim(),
-                    valuation.trim(),
-                    imageUri!!
-                )
-                navController.navigate(ROUTE_BUY)
-            },
-            colors = ButtonDefaults.buttonColors(Color.White),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp)
-        ) {
-            Text(
-                text = "Full Sale",
-                color = Color.Black
-            )
-        }
-        Button(
-            onClick = {
-                var houseRepository = HouseRepository(navController, context)
                 houseRepository.saveHouseRentWithImage(
                     name.trim(),
                     email.trim(),
@@ -167,7 +148,6 @@ fun SellScreen(navController: NavHostController) {
                     valuation.trim(),
                     imageUri!!
                 )
-                navController.navigate(ROUTE_RENT)
             },
             colors = ButtonDefaults.buttonColors(Color.White),
             modifier = Modifier
@@ -179,6 +159,30 @@ fun SellScreen(navController: NavHostController) {
                 color = Color.Black
             )
         }
+
+
+        Button(
+            onClick = {
+                var houseRepository = HouseRepository(navController, context)
+                houseRepository.saveHouseSellWithImage(
+                    name.trim(),
+                    email.trim(),
+                    phoneNumber.trim(),
+                    valuation.trim(),
+                    imageUri!!
+                )
+            },
+            colors = ButtonDefaults.buttonColors(Color.White),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
+        ) {
+            Text(
+                text = "Full Sale",
+                color = Color.Black
+            )
+        }
+
     }
 }
 

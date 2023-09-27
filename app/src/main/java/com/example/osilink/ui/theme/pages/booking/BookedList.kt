@@ -19,6 +19,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -27,6 +29,14 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import com.example.osilink.navigation.ROUTE_BUY
 import com.example.osilink.navigation.ROUTE_SELL
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.os.Bundle
+import android.widget.DatePicker
+import android.widget.TimePicker
+import androidx.appcompat.app.AppCompatActivity
+
+
 
 
 @Composable
@@ -76,26 +86,30 @@ fun BookedListScreen(navController: NavHostController) {
 fun BookingItem(houseName:String, date:String, time:String, id:String,
                 navController:NavHostController, BookingRepository:BookingRepository) {
 
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
         Text(text = houseName)
         Text(text = date)
         Text(text = time)
-        Button(onClick = {
-            BookingRepository.deleteBookings(id)
-        },
+        Button(
+            onClick = {
+                BookingRepository.deleteBookings(id)
+            },
             colors = ButtonDefaults.buttonColors(Color.White)
         ) {
-            Text(text = "Delete Booking",
-                 color = Color.Black
+            Text(
+                text = "Delete Booking",
+                color = Color.Black
             )
         }
-        Button(onClick = {
-            navController.navigate(ROUTE_SELL)
-        },
+        Button(
+            onClick = {
+                navController.navigate(ROUTE_SELL)
+            },
             colors = ButtonDefaults.buttonColors(Color.White)
-            ) {
-            Text(text = "Enter House Details",
-                 color = Color.Black
+        ) {
+            Text(
+                text = "Enter House Details",
+                color = Color.Black
             )
         }
     }

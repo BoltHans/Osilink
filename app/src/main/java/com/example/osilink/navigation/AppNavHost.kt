@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.osilink.models.BottomBarScreen
+import com.example.osilink.ui.theme.pages.booking.BookedListScreen
 import com.example.osilink.ui.theme.pages.booking.BookingScreen
 import com.example.osilink.ui.theme.pages.buy.BuyScreen
 import com.example.osilink.ui.theme.pages.carpenter.CarpenterScreen
@@ -56,6 +57,9 @@ fun AppNavHost(modifier: Modifier = Modifier,
         }
         composable(ROUTE_BOOKING) {
             BookingScreen(navController)
+        }
+        composable(ROUTE_BOOKED_LIST) {
+            BookedListScreen(navController)
         }
         composable(ROUTE_LOGIN){
             LogInScreen(navController)

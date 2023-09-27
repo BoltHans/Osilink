@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -118,7 +120,7 @@ fun RentScreen(navController:NavHostController) {
 fun HouseItem(name: String, email: String, phoneNumber: String, imageUrl: String,valuation: String,id: String,
                navController:NavHostController, houseRepository: HouseRepository) {
     var context = LocalContext.current
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
         Text(text = name)
         Text(text = email)
         Text(text = phoneNumber)

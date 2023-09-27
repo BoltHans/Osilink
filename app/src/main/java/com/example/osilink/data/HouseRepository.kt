@@ -8,6 +8,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.navigation.NavHostController
 import com.example.osilink.models.House
+import com.example.osilink.navigation.ROUTE_BUY
+import com.example.osilink.navigation.ROUTE_RENT
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -42,6 +44,7 @@ class HouseRepository(var navController: NavHostController, var context: Context
                     dbRef.setValue(houseData)
                     Toast.makeText(context, "Saved successfully", Toast.LENGTH_SHORT).show()
                 }
+                navController.navigate(ROUTE_RENT)
             }else{
                 Toast.makeText(context, it.exception!!.message, Toast.LENGTH_SHORT).show()
             }
@@ -64,6 +67,7 @@ class HouseRepository(var navController: NavHostController, var context: Context
                     dbRef.setValue(houseData)
                     Toast.makeText(context, "Saved successfully", Toast.LENGTH_SHORT).show()
                 }
+                navController.navigate(ROUTE_BUY)
             }else{
                 Toast.makeText(context, it.exception!!.message, Toast.LENGTH_SHORT).show()
             }

@@ -38,6 +38,7 @@ fun ThankNoteScreen(navController: NavHostController) {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
+
     ) {
         val imageOffset by remember { mutableStateOf(0.dp) }
 
