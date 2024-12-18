@@ -6,7 +6,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.osilink.models.BottomBarScreen
 import com.example.osilink.ui.theme.pages.booking.BookedListScreen
 import com.example.osilink.ui.theme.pages.booking.BookingScreen
 import com.example.osilink.ui.theme.pages.buy.BuyScreen

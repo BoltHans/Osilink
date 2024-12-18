@@ -35,8 +35,10 @@ import android.os.Bundle
 import android.widget.DatePicker
 import android.widget.TimePicker
 import androidx.appcompat.app.AppCompatActivity
-
-
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.example.osilink.ui.theme.OsilinkTheme
+import com.example.osilink.ui.theme.pages.home.HomeScreen
 
 
 @Composable
@@ -86,7 +88,9 @@ fun BookedListScreen(navController: NavHostController) {
 fun BookingItem(houseName:String, date:String, time:String, id:String,
                 navController:NavHostController, BookingRepository:BookingRepository) {
 
-    Column(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .verticalScroll(rememberScrollState())) {
         Text(text = houseName)
         Text(text = date)
         Text(text = time)
@@ -112,5 +116,12 @@ fun BookingItem(houseName:String, date:String, time:String, id:String,
                 color = Color.Black
             )
         }
+    }
+}
+@Preview(showBackground = true)
+@Composable
+fun BookedListScreenPreview() {
+    OsilinkTheme {
+        BookedListScreen(rememberNavController())
     }
 }

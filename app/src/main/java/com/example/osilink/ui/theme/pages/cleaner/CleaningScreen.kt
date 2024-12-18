@@ -32,14 +32,17 @@ import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.osilink.R
 import com.example.osilink.data.CleanerRepository
 import com.example.osilink.models.Cleaner
+import com.example.osilink.ui.theme.OsilinkTheme
 
 
 
@@ -114,7 +117,9 @@ fun CleanerServicesScreen(navController:NavHostController) {
 @Composable
 fun CleanerItem(name: String, email: String, phoneNumber: String, userid: String, navController:NavHostController, cleanerRepository: CleanerRepository) {
     var context = LocalContext.current
-    Column(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .verticalScroll(rememberScrollState())) {
         Text(text = name)
         Text(text = email)
         Text(text = phoneNumber)
@@ -131,5 +136,13 @@ fun CleanerItem(name: String, email: String, phoneNumber: String, userid: String
             Text(text = "Call Plumber",
                 color = Color.Black)
         }
+    }
+}
+@Preview(showBackground = true)
+@Composable
+fun CleaningScreenPreview() {
+    OsilinkTheme {
+        CleanerServicesScreen(rememberNavController())
+
     }
 }

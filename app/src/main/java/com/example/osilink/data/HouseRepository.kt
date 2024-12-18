@@ -4,21 +4,16 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.net.Uri
 import android.widget.Toast
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.navigation.NavHostController
 import com.example.osilink.models.House
-import com.example.osilink.navigation.ROUTE_BUY
-import com.example.osilink.navigation.ROUTE_RENT
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
-
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 
 class HouseRepository(var navController: NavHostController, var context: Context) {
-    var progress: ProgressDialog
+    private val progress: ProgressDialog
 
     init {
         progress = ProgressDialog(context)
@@ -26,125 +21,122 @@ class HouseRepository(var navController: NavHostController, var context: Context
         progress.setMessage("Please wait...")
     }
 
-    // OPEN GALLERY TO PICK IMAGE
-    fun saveHouseRentWithImage(name:String, email:String, phoneNumber:String, valuation:String, filePath: Uri){
-        var id = System.currentTimeMillis().toString()
-        var storageReference = FirebaseStorage.getInstance().getReference().child("HouseRent/$id")
-        progress.show()
-
-        storageReference.putFile(filePath).addOnCompleteListener{
-            progress.dismiss()
-            if (it.isSuccessful){
-                // Proceed to store other data into the db
-                storageReference.downloadUrl.addOnSuccessListener {
-                    var imageUrl = it.toString()
-                    var houseData = House(name,email, phoneNumber, imageUrl, valuation, id)
-                    var dbRef = FirebaseDatabase.getInstance()
-                        .getReference().child("HouseRent/$id")
-                    dbRef.setValue(houseData)
-                    Toast.makeText(context, "Saved successfully", Toast.LENGTH_SHORT).show()
-                }
-                navController.navigate(ROUTE_RENT)
-            }else{
-                Toast.makeText(context, it.exception!!.message, Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-    fun saveHouseSellWithImage(name:String, email:String, phoneNumber:String, valuation:String, filePath: Uri){
-        var id = System.currentTimeMillis().toString()
-        var storageReference = FirebaseStorage.getInstance().getReference().child("HouseSell/$id")
-        progress.show()
-
-        storageReference.putFile(filePath).addOnCompleteListener{
-            progress.dismiss()
-            if (it.isSuccessful){
-                // Proceed to store other data into the db
-                storageReference.downloadUrl.addOnSuccessListener {
-                    var imageUrl = it.toString()
-                    var houseData = House(name,email, phoneNumber, imageUrl, valuation, id)
-                    var dbRef = FirebaseDatabase.getInstance()
-                        .getReference().child("HouseSell/$id")
-                    dbRef.setValue(houseData)
-                    Toast.makeText(context, "Saved successfully", Toast.LENGTH_SHORT).show()
-                }
-                navController.navigate(ROUTE_BUY)
-            }else{
-                Toast.makeText(context, it.exception!!.message, Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-
-    fun viewHouseRent(rent: MutableState<House>, rents: SnapshotStateList<House>): SnapshotStateList<House> {
-        var ref = FirebaseDatabase.getInstance().getReference().child("HouseRent")
-
-        progress.show()
-        ref.addValueEventListener(object : ValueEventListener {
+    // Function to retrieve houses for rent
+    fun viewHouseRent(): Flow<List<House>> = callbackFlow {
+        val ref = FirebaseDatabase.getInstance().getReference("HouseRent")
+        val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                progress.dismiss()
-                rents.clear()
-                for (snap in snapshot.children){
-                    val value = snap.getValue(House::class.java)
-                    rent.value = value!!
-                    rents.add(value)
+                val houses = mutableListOf<House>()
+                for (snap in snapshot.children) {
+                    snap.getValue(House::class.java)?.let { houses.add(it) }
                 }
+                trySend(houses) // Emit the list to the flow
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
+                close(error.toException()) // Close flow on error
             }
-        })
-        return rents
+        }
+        ref.addValueEventListener(listener)
+        awaitClose { ref.removeEventListener(listener) } // Cleanup
     }
-    fun viewHouseSell(sell: MutableState<House>, sells: SnapshotStateList<House>): SnapshotStateList<House> {
-        var ref = FirebaseDatabase.getInstance().getReference().child("HouseSell")
 
-        progress.show()
-        ref.addValueEventListener(object : ValueEventListener {
+    // Function to retrieve houses for sale
+    fun viewHouseSell(): Flow<List<House>> = callbackFlow {
+        val ref = FirebaseDatabase.getInstance().getReference("HouseSell")
+        val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                progress.dismiss()
-                sells.clear()
-                for (snap in snapshot.children){
-                    val value = snap.getValue(House::class.java)
-                    sell.value = value!!
-                    sells.add(value)
+                val houses = mutableListOf<House>()
+                for (snap in snapshot.children) {
+                    snap.getValue(House::class.java)?.let { houses.add(it) }
                 }
+                trySend(houses) // Emit the list to the flow
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
-            }
-        })
-        return sells
-    }
-
-    fun deleteHouseSell(id: String) {
-            var delRef = FirebaseDatabase.getInstance().getReference()
-                .child("HouseSell/$id")
-            progress.show()
-            delRef.removeValue().addOnCompleteListener {
-                progress.dismiss()
-                if (it.isSuccessful) {
-                    Toast.makeText(context, "House Sold", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(context, it.exception!!.message, Toast.LENGTH_SHORT).show()
-                }
+                close(error.toException()) // Close flow on error
             }
         }
-
-    fun deleteHouseRent(id: String) {
-            var delRef = FirebaseDatabase.getInstance().getReference().child("HouseRent/$id")
-            progress.show()
-            delRef.removeValue().addOnCompleteListener {
-                progress.dismiss()
-                if (it.isSuccessful) {
-                    Toast.makeText(context, "House Rented", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(context, it.exception!!.message, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
+        ref.addValueEventListener(listener)
+        awaitClose { ref.removeEventListener(listener) }
     }
 
+    // Function to save rental house with image
+    fun saveHouseRentWithImage(
+        name: String,
+        email: String,
+        phoneNumber: String,
+        valuation: String,
+        imageUri: Uri
+    ) {
+        progress.show()
 
+        val storageRef = FirebaseStorage.getInstance().reference.child("HouseRentImages/${System.currentTimeMillis()}.jpg")
+        storageRef.putFile(imageUri)
+            .addOnSuccessListener {
+                storageRef.downloadUrl.addOnSuccessListener { imageUrl ->
+                    val house = House(
+                        name = name,
+                        email = email,
+                        phoneNumber = phoneNumber,
+                        imageUrl = imageUrl.toString(),
+                        valuation = valuation,
+                        id = FirebaseDatabase.getInstance().getReference().push().key ?: ""
+                    )
+                    FirebaseDatabase.getInstance()
+                        .getReference("HouseRent")
+                        .child(house.id)
+                        .setValue(house)
+                        .addOnSuccessListener {
+                            progress.dismiss()
+                            Toast.makeText(context, "House added for rent!", Toast.LENGTH_SHORT).show()
+                            navController.navigate("ROUTE_RENT")
+                        }
+                }
+            }
+            .addOnFailureListener {
+                progress.dismiss()
+                Toast.makeText(context, "Failed to upload image: ${it.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    // Function to save sale house with image
+    fun saveHouseSellWithImage(
+        name: String,
+        email: String,
+        phoneNumber: String,
+        valuation: String,
+        imageUri: Uri
+    ) {
+        progress.show()
+
+        val storageRef = FirebaseStorage.getInstance().reference.child("HouseSellImages/${System.currentTimeMillis()}.jpg")
+        storageRef.putFile(imageUri)
+            .addOnSuccessListener {
+                storageRef.downloadUrl.addOnSuccessListener { imageUrl ->
+                    val house = House(
+                        name = name,
+                        email = email,
+                        phoneNumber = phoneNumber,
+                        imageUrl = imageUrl.toString(),
+                        valuation = valuation,
+                        id = FirebaseDatabase.getInstance().getReference().push().key ?: ""
+                    )
+                    FirebaseDatabase.getInstance()
+                        .getReference("HouseSell")
+                        .child(house.id)
+                        .setValue(house)
+                        .addOnSuccessListener {
+                            progress.dismiss()
+                            Toast.makeText(context, "House added for sale!", Toast.LENGTH_SHORT).show()
+                            navController.navigate("ROUTE_BUY")
+                        }
+                }
+            }
+            .addOnFailureListener {
+                progress.dismiss()
+                Toast.makeText(context, "Failed to upload image: ${it.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+}
 

@@ -36,8 +36,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.osilink.R
 import com.example.osilink.data.HouseRepository
-import com.example.osilink.navigation.ROUTE_BUY
-import com.example.osilink.navigation.ROUTE_RENT
 import com.example.osilink.ui.theme.OsilinkTheme
 
 @OptIn(ExperimentalMaterial3Api::class)

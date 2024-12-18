@@ -21,8 +21,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.osilink.R
 import com.example.osilink.data.BookingRepository
-import com.example.osilink.navigation.ROUTE_BOOKED_LIST
-import com.example.osilink.navigation.ROUTE_SELL
 import com.example.osilink.ui.theme.OsilinkTheme
 import java.util.*
 
@@ -120,6 +118,6 @@ fun BookingScreen(navController: NavHostController) {
 @Composable
 fun BookingScreenPreview() {
     OsilinkTheme {
-        BookingScreen(navController = rememberNavController())
+        BookingScreen(rememberNavController())
     }
 }
